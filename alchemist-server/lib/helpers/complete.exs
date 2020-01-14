@@ -1,8 +1,10 @@
 Code.require_file "module_info.exs", __DIR__
+Code.require_file "doc.exs", __DIR__
 
 defmodule Alchemist.Helpers.Complete do
 
   alias Alchemist.Helpers.ModuleInfo
+  alias Alchemist.Helpers.Doc
 
   @moduledoc """
   This Alchemist.Completer holds a codebase copy of the
@@ -302,7 +304,7 @@ defmodule Alchemist.Helpers.Complete do
 
   defp get_module_funs(mod) do
     if function_exported?(mod, :__info__, 1) do
-      if docs = Code.get_docs(mod, :docs) do
+      if docs = Doc.get_docs(mod, :docs) do
         for {tuple, _line, _kind, _sign, doc} <- docs, doc != false, do: tuple
       else
         mod.__info__(:macros) ++ (mod.__info__(:functions) -- [__info__: 1])

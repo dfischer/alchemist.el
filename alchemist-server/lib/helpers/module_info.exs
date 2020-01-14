@@ -1,16 +1,19 @@
-defmodule Alchemist.Helpers.ModuleInfo do
+Code.require_file "doc.exs", __DIR__
 
+defmodule Alchemist.Helpers.ModuleInfo do
   @moduledoc false
 
+  alias Alchemist.Helpers.Doc
+
   def moduledoc?(module) do
-    case Code.get_docs module, :moduledoc do
+    case Doc.get_docs module, :moduledoc do
       {_, doc} -> is_binary doc
       _ -> false
     end
   end
 
   def docs?(module, function) do
-    docs = Code.get_docs module, :docs
+    docs = Doc.get_docs module, :docs
     do_docs?(docs, function)
   end
 
